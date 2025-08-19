@@ -4,10 +4,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 
 const navLinks = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
+  { name: "Start Here", path: "/" },
+  { name: "Who we are", path: "/about" },
   { name: "Services", path: "/services" },
-  { name: "Contact", path: "/contact" },
+  { name: "Portfolio", path: "/contact" },
 ];
 
 const Navbar = () => {

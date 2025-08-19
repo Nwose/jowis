@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { motion } from "framer-motion";
 
 const services = [
   "Website Design & Development",
@@ -16,14 +17,17 @@ export const ContactForm = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  // Generate random plus positions once
+  // Generate random star positions once (to avoid re-randomizing on rerender)
   const stars = useMemo(
     () =>
-      [...Array(25)].map(() => ({
-        top: `${Math.random() * 100}%`,
-        left: `${Math.random() * 100}%`,
-        animationDelay: `${Math.random() * 3}s`,
-      })),
+      Array.from({ length: 40 }).map((_, i) => {
+        const startX = Math.random() * 100;
+        const startY = Math.random() * 100;
+        const endX = Math.random() * 100;
+        const endY = Math.random() * 100;
+        const duration = 8 + Math.random() * 12;
+        return { id: i, startX, startY, endX, endY, duration };
+      }),
     []
   );
 
@@ -42,16 +46,24 @@ export const ContactForm = () => {
 
   return (
     <div className="min-h-screen bg-[#1A002D] relative overflow-hidden text-white">
-      {/* Background Plus Stars */}
+      {/* Background Moving Stars */}
       <div className="absolute inset-0 pointer-events-none">
-        {stars.map((star, i) => (
-          <span
-            key={i}
-            className="absolute text-purple-300 text-xs animate-pulse"
-            style={star}
-          >
-            +
-          </span>
+        {stars.map(({ id, startX, startY, endX, endY, duration }) => (
+          <motion.div
+            key={`star-${id}`}
+            className="absolute w-[2px] h-[2px] bg-white rounded-full"
+            initial={{ x: `${startX}vw`, y: `${startY}vh`, opacity: 0 }}
+            animate={{
+              x: [`${startX}vw`, `${endX}vw`],
+              y: [`${startY}vh`, `${endY}vh`],
+              opacity: [0, 1, 0],
+            }}
+            transition={{
+              duration,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
         ))}
       </div>
 

@@ -54,7 +54,9 @@ const SubBase = () => {
       ></canvas>
 
       {/* Content */}
-      <div className="relative max-w-4xl text-left space-y-10 z-10">
+      <div className="relative max-w-4xl text-left space-y-10 z-10 ml-12">
+        {/* 👆 added `ml-12` for more left margin */}
+
         <p className="text-2xl text-gray-200 leading-relaxed">
           Based in Akure, Nigeria, we’re a{" "}
           <span className="text-purple-400 font-semibold">creative</span> ICT{" "}
@@ -75,6 +77,21 @@ const SubBase = () => {
           turn ideas into reliable products people can use.
         </p>
       </div>
+
+      {/* Custom slow spin */}
+      <style jsx>{`
+        .animate-spin-slow {
+          animation: spin 6s linear infinite;
+        }
+        @keyframes spin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
     </section>
   );
 };

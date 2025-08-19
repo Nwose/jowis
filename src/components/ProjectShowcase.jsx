@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { motion } from "framer-motion";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 
 // Import your images
@@ -34,29 +35,44 @@ const projects = [
 ];
 
 const ProjectShowcase = () => {
-  // Generate plus-star positions once per mount
+  // Generate drifting stars (random start + end points, varied durations)
   const stars = useMemo(
     () =>
-      [...Array(20)].map(() => ({
-        top: `${Math.random() * 100}%`,
-        left: `${Math.random() * 100}%`,
-        animationDelay: `${Math.random() * 3}s`,
-      })),
+      Array.from({ length: 35 }).map((_, i) => {
+        const startX = Math.random() * 100;
+        const startY = Math.random() * 100;
+        const endX = Math.random() * 100;
+        const endY = Math.random() * 100;
+        const duration = 10 + Math.random() * 15;
+        return { id: i, startX, startY, endX, endY, duration };
+      }),
     []
   );
 
   return (
     <section className="min-h-screen bg-[#1A002D] relative overflow-hidden">
-      {/* Background Plus Stars */}
-      <div className="absolute inset-0">
-        {stars.map((star, i) => (
-          <span
-            key={i}
-            className="absolute text-purple-300 text-xs animate-pulse"
-            style={star}
-          >
-            +
-          </span>
+      {/* Background Moving Stars */}
+      <div className="absolute inset-0 pointer-events-none">
+        {stars.map(({ id, startX, startY, endX, endY, duration }) => (
+          <motion.div
+            key={`star-${id}`}
+            className="absolute rounded-full bg-white"
+            style={{
+              width: `${Math.random() * 2 + 1}px`, // random star size
+              height: `${Math.random() * 2 + 1}px`,
+            }}
+            initial={{ x: `${startX}vw`, y: `${startY}vh`, opacity: 0 }}
+            animate={{
+              x: [`${startX}vw`, `${endX}vw`],
+              y: [`${startY}vh`, `${endY}vh`],
+              opacity: [0, 1, 0],
+            }}
+            transition={{
+              duration,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
         ))}
       </div>
 

@@ -1,60 +1,102 @@
 import React from "react";
 
-const projects = [
-  {
-    id: 1,
-    title: "The Hive Incubator",
-    subtitle: "Website",
-    image: "/images/hive.png", // replace with your image path
-  },
-  {
-    id: 2,
-    title: "Anmut Estate and Property Development",
-    subtitle: "Website",
-    image: "/images/anmut.png",
-  },
-  {
-    id: 3,
-    title: "Square Farms Africa",
-    subtitle: "Website",
-    image: "/images/square1.png",
-  },
-  {
-    id: 4,
-    title: "Square Farms Africa",
-    subtitle: "Website",
-    image: "/images/square2.png",
-  },
-  {
-    id: 5,
-    title: "Square Farms Africa",
-    subtitle: "Website",
-    image: "/images/square3.png",
-  },
-];
-
-const WorksSection = () => {
+// ✅ Simple ProjectCard component
+const ProjectCard = ({ title, type, deviceType, mockupContent, className }) => {
   return (
-    <section className="bg-[#1a0033] min-h-screen px-6 py-16">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {projects.map((project) => (
-          <div key={project.id} className="flex flex-col items-start">
-            <div className="overflow-hidden rounded-lg shadow-lg">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-            <h3 className="text-white text-lg font-semibold mt-4">
-              {project.title}
-            </h3>
-            <p className="text-gray-400 text-sm">{project.subtitle}</p>
-          </div>
-        ))}
+    <div
+      className={`bg-[#1A1A2E] text-white rounded-2xl p-6 shadow-lg ${className}`}
+    >
+      <div className="mb-4">
+        <span className="text-sm text-purple-400 font-semibold uppercase">
+          {type}
+        </span>
       </div>
-    </section>
+      <h3 className="text-xl font-bold mb-4">{title}</h3>
+
+      {/* Mockup / Preview area */}
+      <div className="flex justify-center items-center h-48 bg-[#0F0F1C] rounded-xl overflow-hidden">
+        {mockupContent}
+      </div>
+
+      <div className="mt-4 text-sm text-gray-400 italic">
+        Device: {deviceType}
+      </div>
+    </div>
   );
 };
 
-export default WorksSection;
+// ✅ Example mockups (replace with real components/images later)
+const HiveIncubatorMockup = () => (
+  <div className="w-32 h-32 bg-purple-600 rounded-lg flex items-center justify-center">
+    Hive Mockup
+  </div>
+);
+
+const AnmutMockup = () => (
+  <div className="w-32 h-32 bg-blue-600 rounded-lg flex items-center justify-center">
+    Anmut Mockup
+  </div>
+);
+
+const SquareFarmsMockup = () => (
+  <div className="w-32 h-32 bg-green-600 rounded-lg flex items-center justify-center">
+    Square Farms
+  </div>
+);
+
+// ✅ Main Index Page
+const WorkStation = () => {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-[#0A0A1A] to-[#1A0033] p-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Top section - Mobile projects */}
+        <div className="grid md:grid-cols-2 gap-16 mb-24">
+          <ProjectCard
+            title="The Hive Incubator"
+            type="Website"
+            deviceType="mobile"
+            mockupContent={<HiveIncubatorMockup />}
+            className="transform hover:scale-105 transition-transform duration-300"
+          />
+
+          <ProjectCard
+            title="Anmut Estate and Property Development"
+            type="Website"
+            deviceType="mobile"
+            mockupContent={<AnmutMockup />}
+            className="transform hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+
+        {/* Bottom section - Laptop projects */}
+        <div className="grid lg:grid-cols-3 gap-12">
+          <ProjectCard
+            title="Square Farms Africa"
+            type="Website"
+            deviceType="laptop"
+            mockupContent={<SquareFarmsMockup />}
+            className="transform hover:scale-105 transition-transform duration-300"
+          />
+
+          <ProjectCard
+            title="Square Farms Africa"
+            type="Website"
+            deviceType="laptop"
+            mockupContent={<SquareFarmsMockup />}
+            className="transform hover:scale-105 transition-transform duration-300"
+          />
+
+          <ProjectCard
+            title="Square Farms Africa"
+            type="Website"
+            deviceType="laptop"
+            mockupContent={<SquareFarmsMockup />}
+            className="transform hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default WorkStation;

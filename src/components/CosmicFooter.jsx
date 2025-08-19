@@ -1,5 +1,7 @@
+import React, { useMemo } from "react";
+import { motion } from "framer-motion";
 import { FaLinkedin, FaTiktok, FaInstagram } from "react-icons/fa";
-import { FaCopy, FaPlus } from "react-icons/fa6";
+import { FaCopy } from "react-icons/fa6";
 import VectorLogo from "../assets/Vector.png";
 
 const CosmicFooter = () => {
@@ -18,8 +20,50 @@ const CosmicFooter = () => {
     { icon: FaInstagram, href: "#", label: "Instagram" },
   ];
 
+  // Generate stars once to avoid re-randomizing on re-render
+  const stars = useMemo(
+    () =>
+      Array.from({ length: 30 }).map((_, i) => {
+        const startX = Math.random() * 100;
+        const startY = Math.random() * 100;
+        const endX = Math.random() * 100;
+        const endY = Math.random() * 100;
+        const duration = 8 + Math.random() * 12;
+        return {
+          id: i,
+          startX,
+          startY,
+          endX,
+          endY,
+          duration,
+        };
+      }),
+    []
+  );
+
   return (
     <footer className="relative min-h-screen bg-[#1A002D] overflow-hidden">
+      {/* Background Stars (same motion style as your Hero) */}
+      <div className="absolute inset-0 pointer-events-none">
+        {stars.map(({ id, startX, startY, endX, endY, duration }) => (
+          <motion.div
+            key={`star-${id}`}
+            className="absolute w-[2px] h-[2px] bg-white rounded-full"
+            initial={{ x: `${startX}vw`, y: `${startY}vh`, opacity: 0 }}
+            animate={{
+              x: [`${startX}vw`, `${endX}vw`],
+              y: [`${startY}vh`, `${endY}vh`],
+              opacity: [0, 1, 0],
+            }}
+            transition={{
+              duration,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </div>
+
       {/* Background decorative elements */}
       <div className="absolute left-1/2 transform -translate-x-1/2 top-40">
         <img
@@ -28,8 +72,9 @@ const CosmicFooter = () => {
           className="w-20 h-20 animate-glow-only"
         />
       </div>
+
       {/* Main content */}
-      <div className="relative z-10 container mx-auto px-8 py-16 min-h-screen flex items-center">
+      <div className="relative z-10 container mx-auto px-8 py-4 min-h-screen flex items-center">
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           {/* Left section - Branding & Social */}
           <div className="space-y-8">
@@ -54,6 +99,7 @@ const CosmicFooter = () => {
               </div>
             </div>
           </div>
+
           {/* Center section - Logo + Email */}
           <div className="flex flex-col items-center space-y-6">
             <button
@@ -65,6 +111,7 @@ const CosmicFooter = () => {
             </button>
             <p className="text-gray-300 text-sm">Click to copy ↗</p>
           </div>
+
           {/* Right section - Contact Info */}
           <div className="text-right space-y-4">
             <div className="space-y-2">
@@ -78,17 +125,18 @@ const CosmicFooter = () => {
           </div>
         </div>
       </div>
+
       <style>
         {`
-                    @keyframes glowOnly {
-                        0% { filter: drop-shadow(0 0 5px rgba(255,255,255,0.4)); }
-                        50% { filter: drop-shadow(0 0 15px rgba(255,255,255,0.8)); }
-                        100% { filter: drop-shadow(0 0 5px rgba(255,255,255,0.4)); }
-                    }
-                    .animate-glow-only {
-                        animation: glowOnly 4s ease-in-out infinite;
-                    }
-                `}
+          @keyframes glowOnly {
+            0% { filter: drop-shadow(0 0 5px rgba(255,255,255,0.4)); }
+            50% { filter: drop-shadow(0 0 15px rgba(255,255,255,0.8)); }
+            100% { filter: drop-shadow(0 0 5px rgba(255,255,255,0.4)); }
+          }
+          .animate-glow-only {
+            animation: glowOnly 4s ease-in-out infinite;
+          }
+        `}
       </style>
     </footer>
   );

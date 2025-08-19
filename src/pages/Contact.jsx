@@ -1,3 +1,4 @@
+import OurPromise from "../components/about/OurPromises";
 import Index from "../components/contact/Index";
 import WorksSection from "../components/contact/WorkStation";
 import { ContactForm } from "../components/ContactForm";
@@ -8,6 +9,7 @@ export default function Home() {
     <main className="relative min-h-screen bg-black font-sans">
       <Index />
       <WorksSection />
+      <OurPromise />
       <ContactForm />
       <CosmicFooter />
     </main>

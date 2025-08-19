@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 function Hero() {
   return (
@@ -27,48 +27,71 @@ function Hero() {
   );
 }
 
+// ---------------- MOVING STAR ---------------- //
+const Star = () => {
+  const [pos, setPos] = useState({
+    top: Math.random() * 100,
+    left: Math.random() * 100,
+  });
+  const [vel, setVel] = useState({
+    vx: (Math.random() - 0.5) * 0.3, // slower drift than badges
+    vy: (Math.random() - 0.5) * 0.3,
+  });
+  const size = Math.random() * 2 + 1; // 1–3px star
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPos((prev) => {
+        let newTop = prev.top + vel.vy;
+        let newLeft = prev.left + vel.vx;
+        let { vx, vy } = vel;
+
+        // Bounce at edges
+        if (newTop < 0 || newTop > 100) {
+          vy = -vy;
+          newTop = Math.max(0, Math.min(100, newTop));
+        }
+        if (newLeft < 0 || newLeft > 100) {
+          vx = -vx;
+          newLeft = Math.max(0, Math.min(100, newLeft));
+        }
+
+        setVel({ vx, vy });
+        return { top: newTop, left: newLeft };
+      });
+    }, 120); // slower updates for subtle drift
+
+    return () => clearInterval(interval);
+  }, [vel]);
+
+  return (
+    <span
+      className="absolute rounded-full bg-white opacity-80"
+      style={{
+        width: size,
+        height: size,
+        top: `${pos.top}%`,
+        left: `${pos.left}%`,
+      }}
+    />
+  );
+};
+
 const WhyUsSection = () => {
   return (
     <section className="relative min-h-[110vh] bg-[#0c0018] text-white overflow-hidden">
-      {/* --- starry sky (subtle) --- */}
+      {/* --- starry sky (animated) --- */}
       <div className="pointer-events-none absolute inset-0">
-        {[
-          [7, 10],
-          [18, 35],
-          [26, 22],
-          [33, 8],
-          [41, 28],
-          [48, 16],
-          [56, 38],
-          [62, 12],
-          [70, 30],
-          [78, 20],
-          [86, 34],
-          [92, 14],
-        ].map(([t, l], i) => (
-          <span
-            key={i}
-            className="absolute w-[2px] h-[2px] rounded-full bg-white/70"
-            style={{ top: `${t}%`, left: `${l}%`, opacity: 0.8 }}
-          />
+        {Array.from({ length: 40 }).map((_, i) => (
+          <Star key={i} />
         ))}
       </div>
 
       <Hero />
 
       <div className="bg-gradient-to-t to-[#1a00335d] from-[#180030] backdrop-blur-md relative z-20">
-        {/* --- soft fog --- */}
-        {/* <div
-          className="absolute left-1/2 -translate-x-1/2 top-[65%] w-[1400px] h-[520px]"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 35%, rgba(12,0,24,0) 70%)",
-            filter: "blur(30px)",
-          }}
-        /> */}
-
         {/* --- content --- */}
-        <div className="relative z- max-w-3xl mx-auto text-center px-6 py-[140px] pt-20">
+        <div className="relative max-w-3xl mx-auto text-center px-6 py-[140px] pt-20">
           <h2 className="text-4xl md:text-6xl font-bold leading-[1.1] bg-gradient-to-r from-[#cbb6ff] via-white to-[#cbb6ff] bg-clip-text text-transparent p-2">
             This is why you need us
           </h2>

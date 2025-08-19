@@ -1,29 +1,45 @@
 import React, { useMemo } from "react";
+import { motion } from "framer-motion";
 
 const ServiceSection = () => {
-  // Generate plus-star positions once per mount
+  // Generate drifting stars (random start + end positions, varied duration)
   const stars = useMemo(
     () =>
-      [...Array(20)].map(() => ({
-        top: `${Math.random() * 100}%`,
-        left: `${Math.random() * 100}%`,
-        animationDelay: `${Math.random() * 3}s`,
-      })),
+      Array.from({ length: 35 }).map((_, i) => {
+        const startX = Math.random() * 100;
+        const startY = Math.random() * 100;
+        const endX = Math.random() * 100;
+        const endY = Math.random() * 100;
+        const duration = 10 + Math.random() * 15;
+        return { id: i, startX, startY, endX, endY, duration };
+      }),
     []
   );
 
   return (
     <section className="bg-[#0e0023] text-white py-16 px-4 relative overflow-hidden">
-      {/* Background Plus Stars */}
+      {/* Background Drifting Stars */}
       <div className="absolute inset-0 pointer-events-none">
-        {stars.map((star, i) => (
-          <span
-            key={i}
-            className="absolute text-purple-300 text-xs animate-pulse"
-            style={star}
-          >
-            +
-          </span>
+        {stars.map(({ id, startX, startY, endX, endY, duration }) => (
+          <motion.div
+            key={`star-${id}`}
+            className="absolute rounded-full bg-white"
+            style={{
+              width: `${Math.random() * 2 + 1}px`, // varied size
+              height: `${Math.random() * 2 + 1}px`,
+            }}
+            initial={{ x: `${startX}vw`, y: `${startY}vh`, opacity: 0 }}
+            animate={{
+              x: [`${startX}vw`, `${endX}vw`],
+              y: [`${startY}vh`, `${endY}vh`],
+              opacity: [0, 1, 0],
+            }}
+            transition={{
+              duration,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
         ))}
       </div>
 
@@ -105,7 +121,7 @@ const ServiceSection = () => {
                   </p>
                 </div>
 
-                {/* Fade overlay at bottom to blend white part of image */}
+                {/* Fade overlay at bottom */}
                 <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-[#1A002D] to-transparent"></div>
               </div>
             </div>
