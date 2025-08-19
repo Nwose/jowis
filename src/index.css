@@ -1,0 +1,24 @@
+@font-face {
+  font-family: Inter;
+  src: url("../assets/fonts/Inter_28pt-Regular.ttf");
+}
+
+@import "tailwindcss";
+
+@theme {
+  --font-inter: Inter, "sans-serif";
+}
+
+@keyframes star {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+.animate-star {
+  animation: star 3s linear infinite;
+}

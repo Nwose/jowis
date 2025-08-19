@@ -1,0 +1,97 @@
+import { FaLinkedin, FaTiktok, FaInstagram } from "react-icons/fa";
+import { FaCopy, FaPlus } from "react-icons/fa6";
+import VectorLogo from "../assets/Vector.png";
+
+const CosmicFooter = () => {
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText("info@jowistudio.com");
+      alert("Email copied to clipboard!");
+    } catch (err) {
+      alert("Failed to copy email. Please try again.");
+    }
+  };
+
+  const socialLinks = [
+    { icon: FaLinkedin, href: "#", label: "LinkedIn" },
+    { icon: FaTiktok, href: "#", label: "TikTok" },
+    { icon: FaInstagram, href: "#", label: "Instagram" },
+  ];
+
+  return (
+    <footer className="relative min-h-screen bg-[#1A002D] overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 top-40">
+        <img
+          src={VectorLogo}
+          alt="Logo"
+          className="w-20 h-20 animate-glow-only"
+        />
+      </div>
+      {/* Main content */}
+      <div className="relative z-10 container mx-auto px-8 py-16 min-h-screen flex items-center">
+        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+          {/* Left section - Branding & Social */}
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <div className="flex space-x-4">
+                {socialLinks.map(({ icon: Icon, href, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-purple-500/20 hover:border-purple-500/40 transition-all duration-300"
+                    aria-label={label}
+                  >
+                    <Icon className="w-5 h-5 text-white" />
+                  </a>
+                ))}
+              </div>
+              <div className="space-y-2">
+                <p className="text-white font-medium">Jowis Studio © 2025</p>
+                <p className="text-purple-400 text-sm font-light">
+                  Simply Creative
+                </p>
+              </div>
+            </div>
+          </div>
+          {/* Center section - Logo + Email */}
+          <div className="flex flex-col items-center space-y-6">
+            <button
+              onClick={copyEmail}
+              className="bg-gradient-to-r from-purple-500 to-blue-500 hover:shadow-lg text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 flex items-center"
+            >
+              <FaCopy className="w-4 h-4 mr-2" />
+              info@jowistudio.com
+            </button>
+            <p className="text-gray-300 text-sm">Click to copy ↗</p>
+          </div>
+          {/* Right section - Contact Info */}
+          <div className="text-right space-y-4">
+            <div className="space-y-2">
+              <p className="text-white text-sm leading-relaxed">
+                RBD Estate, Opp Dome,
+                <br />
+                Akure, Nigeria
+              </p>
+              <p className="text-white text-sm font-medium">08033789282</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <style>
+        {`
+                    @keyframes glowOnly {
+                        0% { filter: drop-shadow(0 0 5px rgba(255,255,255,0.4)); }
+                        50% { filter: drop-shadow(0 0 15px rgba(255,255,255,0.8)); }
+                        100% { filter: drop-shadow(0 0 5px rgba(255,255,255,0.4)); }
+                    }
+                    .animate-glow-only {
+                        animation: glowOnly 4s ease-in-out infinite;
+                    }
+                `}
+      </style>
+    </footer>
+  );
+};
+
+export default CosmicFooter;
