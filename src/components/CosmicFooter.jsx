@@ -66,11 +66,7 @@ const CosmicFooter = () => {
 
       {/* Background decorative elements */}
       <div className="absolute left-1/2 transform -translate-x-1/2 top-40">
-        <img
-          src={VectorLogo}
-          alt="Logo"
-          className="w-20 h-20 animate-glow-only"
-        />
+        <img src={VectorLogo} alt="Logo" className="w-20 h-20 " />
       </div>
 
       {/* Main content */}
