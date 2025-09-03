@@ -45,7 +45,7 @@ const Navbar = () => {
       {/* Logo (clickable) */}
       <Link to="/" className="shrink-0 flex items-center gap-2 px-2 w-[120px]">
         <img
-          src="/assets/jowislogooo.svg"
+          src="/assets/jowisLogo.svg"
           alt="Logo"
           className="h-12 w-full object-contain"
           style={{ maxWidth: "100%" }}
