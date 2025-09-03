@@ -1,4 +1,3 @@
-import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import SubBase from "../components/SubBase";
 import ServicesSection from "../components/ServicesSection";
@@ -9,7 +8,6 @@ import CosmicFooter from "../components/CosmicFooter";
 export default function Home() {
   return (
     <main className="relative min-h-screen bg-black font-sans">
-      <Navbar />
       <Hero />
       <SubBase />
       <ServicesSection />
