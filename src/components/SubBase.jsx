@@ -46,7 +46,7 @@ const SubBase = () => {
   }, []);
 
   return (
-    <section className="relative bg-[#15002B] py-16 px-8 overflow-hidden">
+    <section className="relative bg-[#15002B] py-16 px-6 sm:px-8 overflow-hidden">
       {/* Stars Canvas */}
       <canvas
         ref={canvasRef}
@@ -54,10 +54,10 @@ const SubBase = () => {
       ></canvas>
 
       {/* Content */}
-      <div className="relative max-w-4xl text-left space-y-10 z-10 ml-12">
-        {/* 👆 added `ml-12` for more left margin */}
+      <div className="relative max-w-4xl text-left space-y-8 z-10 ml-0 sm:ml-12">
+        {/* 👆 mobile has no margin-left, desktop keeps ml-12 */}
 
-        <p className="text-2xl text-gray-200 leading-relaxed">
+        <p className="text-lg sm:text-2xl text-gray-200 leading-relaxed">
           Based in Akure, Nigeria, we’re a{" "}
           <span className="text-purple-400 font-semibold">creative</span> ICT{" "}
           <span className="inline-block text-purple-400 animate-spin-slow">
@@ -66,7 +66,7 @@ const SubBase = () => {
           partner that combines design, technology, and strategy to help
           businesses grow with confidence.
         </p>
-        <p className="text-2xl text-gray-300 leading-relaxed">
+        <p className="text-lg sm:text-2xl text-gray-300 leading-relaxed">
           From <span className="text-gray-400 font-semibold">UI/UX design</span>{" "}
           to <span className="text-gray-400 font-semibold">full product</span>{" "}
           and{" "}

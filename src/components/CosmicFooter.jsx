@@ -85,7 +85,7 @@ const CosmicFooter = () => {
       </div>
 
       {/* Glowing Logo */}
-      <div className="absolute left-1/2 transform -translate-x-1/2 top-40">
+      <div className="absolute left-1/2 transform -translate-x-1/2 top-24 md:top-40">
         <img
           src={VectorLogo}
           alt="Logo"
@@ -94,12 +94,12 @@ const CosmicFooter = () => {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 container mx-auto px-8 py-4 min-h-screen flex items-center">
-        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+      <div className="relative z-10 container mx-auto px-6 sm:px-8 py-8 min-h-screen flex items-center">
+        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-16 items-center text-center md:text-left">
           {/* Left section - Branding & Social */}
           <div className="space-y-8">
             <div className="space-y-4">
-              <div className="flex space-x-4">
+              <div className="flex justify-center md:justify-start space-x-4">
                 {socialLinks.map(({ icon: Icon, href, label }) => (
                   <a
                     key={label}
@@ -126,7 +126,7 @@ const CosmicFooter = () => {
           <div className="flex flex-col items-center space-y-6">
             <button
               onClick={copyEmail}
-              className="bg-gradient-to-r from-purple-500 to-blue-500 hover:shadow-lg text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 flex items-center"
+              className="bg-gradient-to-r from-purple-500 to-blue-500 hover:shadow-lg text-white px-6 sm:px-8 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 flex items-center"
             >
               <FaCopy className="w-4 h-4 mr-2" />
               {copied ? "Link copied!" : "info@jowistudio.com"}
@@ -137,7 +137,7 @@ const CosmicFooter = () => {
           </div>
 
           {/* Right section - Contact Info */}
-          <div className="text-right space-y-4">
+          <div className="space-y-4 text-center md:text-right">
             <div className="space-y-2">
               <p className="text-white text-sm leading-relaxed">
                 RBD Estate, Opp Dome,
