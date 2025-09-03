@@ -155,7 +155,7 @@ const projects = [
     description:
       "Website design for a startup incubator helping early-stage founders grow.",
     image: hiveIncubatorMockup,
-    link: "#",
+    link: "https://www.thehiveincubator.com/",
   },
   {
     id: 2,
@@ -163,7 +163,7 @@ const projects = [
     description:
       "Real estate website for a modern development firm in Nigeria.",
     image: anmutDevelopersMockup,
-    link: "#",
+    link: "https://anmutdevelopers.com/",
   },
   {
     id: 3,
@@ -171,7 +171,7 @@ const projects = [
     description:
       "Responsive website design for an agro-firm brand making impact in Africa.",
     image: squareFarmsMockup,
-    link: "#",
+    link: "https://www.squarefarms.africa/",
   },
 ];
 

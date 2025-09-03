@@ -1,100 +1,3 @@
-// import React from "react";
-
-// function ProjectCard({ title, subtitle = "Website", src, alt, size = "lg" }) {
-//   const height =
-//     size === "lg" ? "h-[22rem] md:h-[28rem]" : "h-56 sm:h-64 md:h-72";
-
-//   return (
-//     <article className="group">
-//       {/* Image frame */}
-//       <div
-//         className={[
-//           "relative overflow-hidden rounded-2xl",
-//           "bg-zinc-900/40 ring-1 ring-white/10",
-//           height,
-//         ].join(" ")}
-//       >
-//         {/* Image */}
-//         <img
-//           src={src}
-//           alt={alt || title}
-//           className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-//           loading="lazy"
-//         />
-
-//         {/* Subtle hover sheen */}
-//         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-//         {/* Focus outline for a11y if card becomes a link later */}
-//         <span className="absolute inset-0 rounded-2xl ring-inset ring-transparent focus-within:ring-2 focus-within:ring-violet-300" />
-//       </div>
-
-//       {/* Captions below the image (like in your screenshot) */}
-//       <div className="mt-3">
-//         <h3 className="text-zinc-50 text-base md:text-lg font-semibold leading-tight">
-//           {title}
-//         </h3>
-//         <p className="text-zinc-400 text-sm">{subtitle}</p>
-//       </div>
-//     </article>
-//   );
-// }
-
-// export default function WorksSection() {
-//   const topRow = [
-//     {
-//       title: "The Hive Incubator",
-//       src: "/hive-incubator.png",
-//       alt: "Tablet mockup of The Hive Incubator website on dark background",
-//     },
-//     {
-//       title: "Anmut Estate and Property Development",
-//       src: "/anmut-developers.png",
-//       alt: "Mobile mockup of Anmut Estate and Property Development website",
-//     },
-//   ];
-
-//   const bottomRow = [
-//     {
-//       title: "Square Farms Africa",
-//       src: "/square-farms.png",
-//       alt: "Laptop mockup of Square Farms Africa website (angle 1)",
-//       size: "sm",
-//     },
-//     {
-//       title: "Square Farms Africa",
-//       src: "/square-farms.png",
-//       alt: "Laptop mockup of Square Farms Africa website (angle 2)",
-//       size: "sm",
-//     },
-//     {
-//       title: "Square Farms Africa",
-//       src: "/square-farms.png",
-//       alt: "Laptop mockup of Square Farms Africa website (angle 3)",
-//       size: "sm",
-//     },
-//   ];
-
-//   return (
-//     <section className="w-full bg-[#13001f]">
-//       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
-//         {/* GRID — Top: 2 tall cards, Bottom: 3 shorter cards */}
-//         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-//           {topRow.map((p) => (
-//             <ProjectCard key={p.title} {...p} size="lg" />
-//           ))}
-//         </div>
-
-//         <div className="mt-8 md:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-//           {bottomRow.map((p, idx) => (
-//             <ProjectCard key={`${p.title}-${idx}`} {...p} size="sm" />
-//           ))}
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
 import React, { useState, useEffect } from "react";
 
 // ---------------- DRIFTING STAR ---------------- //
@@ -148,57 +51,70 @@ const Star = () => {
   );
 };
 
-function ProjectCard({ title, subtitle = "Website", src, alt, size = "lg" }) {
+// ---------------- PROJECT CARD ---------------- //
+function ProjectCard({
+  title,
+  subtitle = "Website",
+  src,
+  alt,
+  size = "lg",
+  url,
+}) {
   const height =
     size === "lg" ? "h-[22rem] md:h-[28rem]" : "h-56 sm:h-64 md:h-72";
 
   return (
     <article className="group">
-      {/* Image frame */}
-      <div
-        className={[
-          "relative overflow-hidden rounded-2xl",
-          "bg-zinc-900/40 ring-1 ring-white/10",
-          height,
-        ].join(" ")}
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block focus:outline-none"
       >
-        {/* Image */}
-        <img
-          src={src}
-          alt={alt || title}
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-          loading="lazy"
-        />
+        {/* Image frame */}
+        <div
+          className={[
+            "relative overflow-hidden rounded-2xl",
+            "bg-zinc-900/40 ring-1 ring-white/10",
+            height,
+          ].join(" ")}
+        >
+          <img
+            src={src}
+            alt={alt || title}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            loading="lazy"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <span className="absolute inset-0 rounded-2xl ring-inset ring-transparent focus-within:ring-2 focus-within:ring-violet-300" />
+        </div>
 
-        {/* Subtle hover sheen */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-        {/* Focus outline */}
-        <span className="absolute inset-0 rounded-2xl ring-inset ring-transparent focus-within:ring-2 focus-within:ring-violet-300" />
-      </div>
-
-      {/* Captions below image */}
-      <div className="mt-3">
-        <h3 className="text-zinc-50 text-base md:text-lg font-semibold leading-tight">
-          {title}
-        </h3>
-        <p className="text-zinc-400 text-sm">{subtitle}</p>
-      </div>
+        {/* Captions below image */}
+        <div className="mt-3">
+          <h3 className="text-zinc-50 text-base md:text-lg font-semibold leading-tight hover:underline">
+            {title}
+          </h3>
+          <p className="text-zinc-400 text-sm">{subtitle}</p>
+        </div>
+      </a>
     </article>
   );
 }
 
+// ---------------- WORKS SECTION ---------------- //
 export default function WorksSection() {
   const topRow = [
     {
       title: "The Hive Incubator",
       src: "/hive-incubator.png",
       alt: "Tablet mockup of The Hive Incubator website on dark background",
+      url: "https://thehiveincubator.com",
     },
     {
       title: "Anmut Estate and Property Development",
       src: "/anmut-developers.png",
       alt: "Mobile mockup of Anmut Estate and Property Development website",
+      url: "https://anmutdevelopers.com",
     },
   ];
 
@@ -208,18 +124,21 @@ export default function WorksSection() {
       src: "/square-farms.png",
       alt: "Laptop mockup of Square Farms Africa website (angle 1)",
       size: "sm",
+      url: "https://www.squarefarms.africa",
     },
     {
-      title: "Square Farms Africa",
-      src: "/square-farms.png",
-      alt: "Laptop mockup of Square Farms Africa website (angle 2)",
+      title: "Folajomi Adegbulugbe",
+      src: "/jomi.png",
+      alt: "Folajomi (angle 2)",
       size: "sm",
+      url: "https://folajomi.com",
     },
     {
-      title: "Square Farms Africa",
-      src: "/square-farms.png",
-      alt: "Laptop mockup of Square Farms Africa website (angle 3)",
+      title: "Tolu Legal",
+      src: "/tolu.png",
+      alt: "Tolu legal (angle 3)",
       size: "sm",
+      url: "https://tolulegal.com",
     },
   ];
 

@@ -70,13 +70,21 @@ export default function HeroSection() {
             for real business needs.
           </span>
         </h1>
-        <p className="mt-2 text-gray-300 text-lg md:text-xl">
+        <p className="mt-2 text-gray-300 text-lg md:text-xl mb-5">
           We focus on what works, not just what’s trendy.
         </p>
-        <button className="mt-6 px-8 py-4 flex items-center gap-2 bg-purple-700 hover:bg-purple-800 text-white rounded-md transition duration-300 mx-auto text-lg">
-          Get Started today
-          <FaArrowRight />
-        </button>
+        <a
+          href="#contact"
+          className="px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 
+             flex items-center justify-center gap-2 
+             rounded-md bg-gradient-to-r from-[#7B2FF7] to-[#3A0CA3] 
+             text-white text-sm sm:text-base font-semibold 
+             shadow-lg hover:scale-105 hover:shadow-purple-500/50 
+             transition-transform mx-auto w-fit"
+        >
+          Get Started
+          <FaArrowRight className="transform group-hover:translate-x-1 transition-transform duration-300" />
+        </a>
       </div>
 
       {/* Floating animation for pattern image */}

@@ -6,6 +6,7 @@ import wilsonImg from "../../assets/wilson.jpg";
 import feranmiImg from "../../assets/feronmi.jpg";
 import joyImg from "../../assets/joy.jpg";
 import johnsonImg from "../../assets/johnson.jpg";
+import wealthyImg from "../../assets/Wealthy.jpg";
 const teamMembers = [
   {
     name: "Andrew",
@@ -50,7 +51,7 @@ const teamMembers = [
     left: 82,
     role: "UI/UX Designer",
     funFact: "Enjoys creating designs.",
-    image: "/images/tolu.jpg",
+    image: wealthyImg,
   },
   {
     name: "Feranmi",

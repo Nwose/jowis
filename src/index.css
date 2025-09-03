@@ -22,3 +22,7 @@
 .animate-star {
   animation: star 3s linear infinite;
 }
+
+html {
+  scroll-behavior: smooth;
+}
