@@ -44,7 +44,7 @@ const Hero = () => {
       })}
 
       {/* Content */}
-      <div className="relative z-20 flex flex-col items-center text-center">
+      <div className="relative z-20 flex flex-col items-center text-center py-15">
         {/* Image */}
         <motion.img
           src="/assets/cityscape.png"
