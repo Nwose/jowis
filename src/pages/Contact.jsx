@@ -1,3 +1,4 @@
+import CanonicalTag from "../components/CanonicalTag";
 import OurPromise from "../components/about/OurPromises";
 import Index from "../components/contact/Index";
 import WorksSection from "../components/contact/WorkStation";
@@ -6,12 +7,17 @@ import CosmicFooter from "../components/CosmicFooter";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-black font-sans">
-      <Index />
-      <WorksSection />
-      <OurPromise />
-      <ContactForm />
-      <CosmicFooter />
-    </main>
+    <>
+      {/* ✅ Canonical tag for Contact page */}
+      <CanonicalTag url="https://www.jowistudio.com/contact" />
+
+      <main className="relative min-h-screen bg-black font-sans">
+        <Index />
+        <WorksSection />
+        <OurPromise />
+        <ContactForm />
+        <CosmicFooter />
+      </main>
+    </>
   );
 }
