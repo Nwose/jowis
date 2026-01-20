@@ -58,7 +58,7 @@ const CosmicFooter = () => {
           duration,
         };
       }),
-    []
+    [],
   );
 
   return (
@@ -144,7 +144,7 @@ const CosmicFooter = () => {
                 <br />
                 Akure, Nigeria
               </p>
-              <p className="text-white text-sm font-medium">08033789282</p>
+              <p className="text-white text-sm font-medium">08146512206</p>
             </div>
           </div>
         </div>
