@@ -1,6 +1,7 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import StarField from "./StarField";
 
 // Import your images
 import hiveIncubatorMockup from "../assets/hive-incubator.png";
@@ -35,46 +36,10 @@ const projects = [
 ];
 
 const ProjectShowcase = () => {
-  // Floating stars
-  const stars = useMemo(
-    () =>
-      Array.from({ length: 35 }).map((_, i) => {
-        const startX = Math.random() * 100;
-        const startY = Math.random() * 100;
-        const endX = Math.random() * 100;
-        const endY = Math.random() * 100;
-        const duration = 10 + Math.random() * 15;
-        return { id: i, startX, startY, endX, endY, duration };
-      }),
-    []
-  );
-
   return (
     <section className="min-h-screen bg-[#1A002D] relative overflow-hidden">
       {/* Background Moving Stars */}
-      <div className="absolute inset-0 pointer-events-none">
-        {stars.map(({ id, startX, startY, endX, endY, duration }) => (
-          <motion.div
-            key={`star-${id}`}
-            className="absolute rounded-full bg-white"
-            style={{
-              width: `${Math.random() * 2 + 1}px`,
-              height: `${Math.random() * 2 + 1}px`,
-            }}
-            initial={{ x: `${startX}vw`, y: `${startY}vh`, opacity: 0 }}
-            animate={{
-              x: [`${startX}vw`, `${endX}vw`],
-              y: [`${startY}vh`, `${endY}vh`],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </div>
+      <StarField count={35} />
 
       <div className="relative z-10 container mx-auto px-6 py-16">
         {/* Header Badge */}

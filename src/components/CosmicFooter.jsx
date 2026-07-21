@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
 import { FaLinkedin, FaTiktok, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { FaCopy } from "react-icons/fa6";
 import VectorLogo from "../assets/Vector.png";
+import StarField from "./StarField";
 
 const CosmicFooter = () => {
   const [copied, setCopied] = useState(false);
@@ -40,49 +40,10 @@ const CosmicFooter = () => {
     },
   ];
 
-  // Generate stars once
-  const stars = useMemo(
-    () =>
-      Array.from({ length: 30 }).map((_, i) => {
-        const startX = Math.random() * 100;
-        const startY = Math.random() * 100;
-        const endX = Math.random() * 100;
-        const endY = Math.random() * 100;
-        const duration = 8 + Math.random() * 12;
-        return {
-          id: i,
-          startX,
-          startY,
-          endX,
-          endY,
-          duration,
-        };
-      }),
-    [],
-  );
-
   return (
     <footer className="relative min-h-screen bg-[#1A002D] overflow-hidden">
       {/* Background Stars */}
-      <div className="absolute inset-0 pointer-events-none">
-        {stars.map(({ id, startX, startY, endX, endY, duration }) => (
-          <motion.div
-            key={`star-${id}`}
-            className="absolute w-[2px] h-[2px] bg-white rounded-full"
-            initial={{ x: `${startX}vw`, y: `${startY}vh`, opacity: 0 }}
-            animate={{
-              x: [`${startX}vw`, `${endX}vw`],
-              y: [`${startY}vh`, `${endY}vh`],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </div>
+      <StarField count={30} />
 
       {/* Glowing Logo */}
       <div className="absolute left-1/2 transform -translate-x-1/2 top-24 md:top-40">

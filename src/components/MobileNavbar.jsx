@@ -33,7 +33,7 @@ const MobileNavbar = () => {
         <Link to="/" className="flex items-center w-[100px]">
           <img
             src="/assets/jowisLogo.svg"
-            alt="Logo"
+            alt="Jowis Studio logo"
             className="h-10 w-full object-contain"
           />
         </Link>

@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import StarField from "./StarField";
 
 const services = [
   "Website Design & Development",
@@ -18,19 +18,6 @@ export const ContactForm = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(null);
-
-  const stars = useMemo(
-    () =>
-      Array.from({ length: 40 }).map((_, i) => {
-        const startX = Math.random() * 100;
-        const startY = Math.random() * 100;
-        const endX = Math.random() * 100;
-        const endY = Math.random() * 100;
-        const duration = 8 + Math.random() * 12;
-        return { id: i, startX, startY, endX, endY, duration };
-      }),
-    []
-  );
 
   const toggleService = (service) => {
     setSelectedServices((prev) =>
@@ -85,25 +72,7 @@ export const ContactForm = () => {
       id="contact"
     >
       {/* Background Moving Stars */}
-      <div className="absolute inset-0 pointer-events-none">
-        {stars.map(({ id, startX, startY, endX, endY, duration }) => (
-          <motion.div
-            key={`star-${id}`}
-            className="absolute w-[2px] h-[2px] bg-white rounded-full"
-            initial={{ x: `${startX}vw`, y: `${startY}vh`, opacity: 0 }}
-            animate={{
-              x: [`${startX}vw`, `${endX}vw`],
-              y: [`${startY}vh`, `${endY}vh`],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </div>
+      <StarField count={40} />
 
       {/* Foreground Content */}
       <div className="container mx-auto px-6 py-12 relative z-10">
@@ -114,9 +83,9 @@ export const ContactForm = () => {
         </div>
 
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-bold text-center mb-16 leading-tight">
+          <h2 className="text-5xl md:text-6xl font-bold text-center mb-16 leading-tight">
             Let's build something great together.
-          </h1>
+          </h2>
 
           <div className="grid lg:grid-cols-2 gap-16">
             {/* Services Selection */}

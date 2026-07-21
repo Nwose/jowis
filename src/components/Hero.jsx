@@ -1,33 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
+import StarField from "./StarField";
 
 const Hero = () => {
   return (
     <motion.section className="relative min-h-screen w-full bg-[#1A002D] text-white overflow-hidden px-4 sm:px-6 font-sans flex flex-col justify-center pt-[80px]">
       {/* Stars */}
-      {Array.from({ length: 30 }).map((_, i) => {
-        const randomX = Math.random() * 100;
-        const randomY = Math.random() * 100;
-        const randomDuration = 8 + Math.random() * 12;
-
-        return (
-          <motion.div
-            key={`star-${i}`}
-            className="absolute w-[2px] h-[2px] bg-white rounded-full"
-            initial={{ x: `${randomX}vw`, y: `${randomY}vh`, opacity: 0 }}
-            animate={{
-              x: [`${randomX}vw`, `${Math.random() * 100}vw`],
-              y: [`${randomY}vh`, `${Math.random() * 100}vh`],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: randomDuration,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        );
-      })}
+      <StarField count={30} />
 
       {/* Purple cubes */}
       {Array.from({ length: 15 }).map((_, i) => {
@@ -48,7 +27,7 @@ const Hero = () => {
         {/* Image */}
         <motion.img
           src="/assets/cityscape.png"
-          alt="Cityscape"
+          alt="Jowis Studio digital solutions illustration"
           className="w-[80%] max-w-[320px] sm:max-w-[500px] md:max-w-[850px] lg:max-w-[1000px] mb-4 sm:mb-6 md:mb-8 relative z-10"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}

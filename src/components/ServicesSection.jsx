@@ -1,20 +1,8 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { motion } from "framer-motion";
+import StarField from "./StarField";
 
 const ServiceSection = () => {
-  const stars = useMemo(
-    () =>
-      Array.from({ length: 35 }).map((_, i) => {
-        const startX = Math.random() * 100;
-        const startY = Math.random() * 100;
-        const endX = Math.random() * 100;
-        const endY = Math.random() * 100;
-        const duration = 10 + Math.random() * 15;
-        return { id: i, startX, startY, endX, endY, duration };
-      }),
-    []
-  );
-
   // card container variants
   const containerVariants = {
     hidden: {},
@@ -39,29 +27,7 @@ const ServiceSection = () => {
   return (
     <section className="bg-[#0e0023] text-white py-16 px-4 relative overflow-hidden">
       {/* Background Stars */}
-      <div className="absolute inset-0 pointer-events-none">
-        {stars.map(({ id, startX, startY, endX, endY, duration }) => (
-          <motion.div
-            key={`star-${id}`}
-            className="absolute rounded-full bg-white"
-            style={{
-              width: `${Math.random() * 2 + 1}px`,
-              height: `${Math.random() * 2 + 1}px`,
-            }}
-            initial={{ x: `${startX}vw`, y: `${startY}vh`, opacity: 0 }}
-            animate={{
-              x: [`${startX}vw`, `${endX}vw`],
-              y: [`${startY}vh`, `${endY}vh`],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </div>
+      <StarField count={35} />
 
       {/* Foreground */}
       <div className="relative z-10">
@@ -172,7 +138,7 @@ const ServiceSection = () => {
       </div>
 
       {/* Glow animation */}
-      <style jsx>{`
+      <style>{`
         @keyframes glow {
           0%,
           100% {
