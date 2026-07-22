@@ -79,7 +79,7 @@ const SubBase = () => {
       </div>
 
       {/* Custom slow spin */}
-      <style jsx>{`
+      <style>{`
         .animate-spin-slow {
           animation: spin 6s linear infinite;
         }
