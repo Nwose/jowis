@@ -10,7 +10,7 @@ export default function Contact() {
     <main className="relative min-h-screen bg-black font-sans">
       <SEO
         title="Contact Us | Jowis Studio"
-        description="Get in touch with Jowis Studio in Akure, Ondo State. Tell us about your website, ICT support, or network project and we'll get back to you fast."
+        description="Get in touch with Jowis Studio — our office is in Akure, Ondo State, and we work with clients across Nigeria and beyond. Tell us about your website, ICT support, or network project and we'll get back to you fast."
         path="/contact"
       />
       <Index />

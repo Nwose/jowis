@@ -10,8 +10,8 @@ export default function Home() {
   return (
     <main className="relative min-h-screen bg-black font-sans">
       <SEO
-        title="Jowis Studio | Web Development & ICT Support in Akure, Nigeria"
-        description="Jowis Studio designs fast, mobile-ready websites and delivers reliable ICT support, network setup, and IT consulting for growing businesses in Akure, Ondo State and beyond."
+        title="Jowis Studio | IT Solutions, Web Development & ICT Support in Nigeria"
+        description="Jowis Studio is an established Nigerian IT solutions and web development company, delivering website design, ICT support, network setup, IT consulting, and email administration for businesses that need technology to work."
         path="/"
       />
       <Hero />

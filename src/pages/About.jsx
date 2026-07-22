@@ -11,7 +11,7 @@ export default function About() {
     <main className="relative min-h-screen bg-black font-sans">
       <SEO
         title="About Us | Jowis Studio"
-        description="Meet the team behind Jowis Studio and the values that guide how we build websites, support ICT infrastructure, and help businesses in Akure, Nigeria grow with technology."
+        description="Meet the team behind Jowis Studio, an established Nigerian IT solutions and web development company, and the values that guide how we build websites, support ICT infrastructure, and deliver dependable technology for our clients."
         path="/about"
       />
       <HeroSection />

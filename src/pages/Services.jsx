@@ -10,7 +10,7 @@ export default function Services() {
     <main className="relative min-h-screen bg-black font-sans">
       <SEO
         title="Our Services | Jowis Studio"
-        description="Website design & development, ICT support, network setup & management, and IT consulting — Jowis Studio's core services for businesses ready to grow with reliable technology."
+        description="Website design & development, branding, IT consulting, network setup & management, ICT support, and email administration (Zoho & Microsoft) — the core services Jowis Studio delivers for businesses across Nigeria."
         path="/services"
       />
       <WhyUsSection />
