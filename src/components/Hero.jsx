@@ -43,7 +43,7 @@ const Hero = () => {
         >
           Building reliable digital solutions
           <br className="hidden sm:block" />
-          for growing businesses.
+          for businesses that need technology to work.
         </motion.h1>
 
         {/* Paragraph */}

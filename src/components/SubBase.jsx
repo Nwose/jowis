@@ -58,13 +58,13 @@ const SubBase = () => {
         {/* 👆 mobile has no margin-left, desktop keeps ml-12 */}
 
         <p className="text-lg sm:text-2xl text-gray-200 leading-relaxed">
-          Based in Akure, Nigeria, we’re a{" "}
+          We’re a{" "}
           <span className="text-purple-400 font-semibold">creative</span> ICT{" "}
           <span className="inline-block text-purple-400 animate-spin-slow">
             <FaGlobe />
           </span>{" "}
           partner that combines design, technology, and strategy to help
-          businesses grow with confidence.
+          businesses operate with confidence.
         </p>
         <p className="text-lg sm:text-2xl text-gray-300 leading-relaxed">
           From <span className="text-gray-400 font-semibold">UI/UX design</span>{" "}
@@ -73,8 +73,8 @@ const SubBase = () => {
           <span className="text-gray-400 font-semibold">
             website development
           </span>
-          , we work hand-in-hand with startups, brands, and organizations to
-          turn ideas into reliable products people can use.
+          , we work hand-in-hand with businesses and organizations of every
+          size to turn ideas into reliable products people can use.
         </p>
       </div>
 
