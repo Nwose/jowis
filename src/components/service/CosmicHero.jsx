@@ -4,6 +4,7 @@ import {
   FaLaptopCode,
   FaHeadset,
   FaNetworkWired,
+  FaEnvelope,
 } from "react-icons/fa";
 
 // ---------------- MOVING STAR ---------------- //
@@ -83,6 +84,13 @@ const slides = [
     tagline: "Reliable network setup and fixes for smooth connection.",
     description:
       "We design, deploy, and manage secure networks that power seamless communication and connectivity.",
+  },
+  {
+    icon: <FaEnvelope className="w-8 h-8 text-purple-400" />,
+    title: "Email Administration",
+    tagline: "Professional business email, fully managed.",
+    description:
+      "As Zoho and Microsoft partners, we set up, migrate, and administer business email so your team communicates on a secure, professional platform — without the IT headache.",
   },
 ];
 

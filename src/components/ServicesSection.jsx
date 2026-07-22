@@ -134,6 +134,22 @@ const ServiceSection = () => {
               </motion.div>
             </div>
           </div>
+
+          {/* Fifth service — full width */}
+          <motion.div
+            className="mt-2 p-6 relative rounded-md overflow-hidden bg-gradient-to-tr from-[#1A002D] to-[#481F66]"
+            variants={cardVariants}
+            whileHover="hover"
+            whileTap="tap"
+          >
+            <h3 className="text-white text-xl font-semibold mb-2">
+              Email Administration
+            </h3>
+            <p className="text-sm text-[#b3a6ff]">
+              Zoho and Microsoft business email setup, migration, and ongoing
+              administration for your team.
+            </p>
+          </motion.div>
         </motion.div>
       </div>
 
