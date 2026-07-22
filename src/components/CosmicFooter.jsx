@@ -49,7 +49,7 @@ const CosmicFooter = () => {
       <div className="absolute left-1/2 transform -translate-x-1/2 top-24 md:top-40">
         <img
           src={VectorLogo}
-          alt="Logo"
+          alt="Jowis Studio logo mark"
           className="w-20 h-20 animate-glow-only"
         />
       </div>

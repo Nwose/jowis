@@ -57,7 +57,7 @@ const OurPromise = () => {
         <div className="relative w-40 h-20 overflow-hidden">
           <img
             src="/Vector.png"
-            alt="Top Icon"
+            alt="Jowis Studio icon mark"
             className="absolute -top-10 left-1/2 -translate-x-1/2 w-48 h-48 object-contain"
           />
         </div>
@@ -80,7 +80,7 @@ const OurPromise = () => {
       <div className="flex justify-center mt-8 relative z-10">
         <img
           src="/signature.png"
-          alt="Signature"
+          alt="Jowis Studio leadership signature"
           className="h-12 object-contain"
         />
       </div>
@@ -89,7 +89,7 @@ const OurPromise = () => {
       <div className="flex justify-center mt-6 relative z-10">
         <img
           src="/stamp.png"
-          alt="Stamp"
+          alt="Jowis Studio official stamp"
           className="w-20 h-20 rounded-full object-cover"
         />
       </div>
