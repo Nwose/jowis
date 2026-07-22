@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git commit -m ' *)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Read(//tmp/**)",
+      "Bash(netstat -ano)",
+      "Bash(chromium-cli --session jowis)",
+      "Bash(npx --yes playwright --version)",
+      "Bash(npx --yes playwright install chromium)",
+      "Bash(npm init *)",
+      "Bash(node verify.js)"
+    ]
+  }
+}
