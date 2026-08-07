@@ -22,7 +22,7 @@
 
 import { chromium } from "playwright";
 import { spawn } from "node:child_process";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -76,16 +76,54 @@ async function main() {
     const browser = await chromium.launch();
     const page = await browser.newPage();
 
+    // dist/index.html doubles as both the "/" output and the SPA-fallback
+    // shell Vite preview serves for every other route. Once it's overwritten
+    // with a fully-rendered page (title/meta/canonical baked in), the next
+    // route's initial HTML starts from that polluted shell and React just
+    // appends its own <title>/<meta>/<link> on top instead of replacing them
+    // — producing duplicate, conflicting canonical/OG tags on every route
+    // but the one prerendered last. Reset to the pristine build output
+    // before every route so each one starts clean.
+    const indexPath = path.join(distDir, "index.html");
+    const builtIndexHtml = await readFile(indexPath, "utf-8");
+
+    // index.html's own static <title>/<meta description> (there for the
+    // instant before React mounts, and for JS-less clients) aren't replaced
+    // by the per-page <SEO> tags React renders — React only manages tags it
+    // rendered itself, so the static ones stay and we'd end up with two of
+    // each. Every route already renders its own <SEO>, so strip the static
+    // ones from the shell used to reset between routes; real (non-prerender)
+    // page loads still get them since only this in-memory copy is touched.
+    const resetShellHtml = builtIndexHtml
+      .replace(/<title>.*?<\/title>/s, "")
+      .replace(/<meta name="description"[^>]*>\s*/, "");
+
+    let homeHtml = null;
+
     for (const route of ROUTES) {
-      await page.goto(`${BASE_URL}${route.path}`, { waitUntil: "networkidle" });
+      await writeFile(indexPath, resetShellHtml, "utf-8");
+
+      // "networkidle" would also wait on third-party analytics beacons
+      // (gtag.js -> analytics.google.com / doubleclick / google ads pixel),
+      // which are outside our control and can stall well past the timeout.
+      // waitForSelector("footer") is the real signal that React has mounted.
+      await page.goto(`${BASE_URL}${route.path}`, { waitUntil: "load" });
       await page.waitForSelector("footer", { timeout: 15000 });
       const html = "<!DOCTYPE html>\n" + (await page.content());
+
+      if (route.path === "/") homeHtml = html;
 
       const outPath = path.join(distDir, route.out);
       await mkdir(path.dirname(outPath), { recursive: true });
       await writeFile(outPath, html, "utf-8");
       console.log(`Prerendered ${route.path} -> dist/${route.out}`);
     }
+
+    // The loop's last pristine-reset write (done for whichever route ran
+    // last) leaves dist/index.html as the un-rendered shell. Restore it to
+    // the actual prerendered homepage now that no other route still needs
+    // it as a fallback shell.
+    await writeFile(indexPath, homeHtml, "utf-8");
 
     await browser.close();
   } catch (err) {
