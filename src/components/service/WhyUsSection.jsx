@@ -92,9 +92,9 @@ const WhyUsSection = () => {
       <div className="bg-gradient-to-t to-[#1a00335d] from-[#180030] backdrop-blur-md relative z-20">
         {/* --- content --- */}
         <div className="relative max-w-3xl mx-auto text-center px-6 py-[140px] pt-20">
-          <h2 className="text-4xl md:text-6xl font-bold leading-[1.1] bg-gradient-to-r from-[#cbb6ff] via-white to-[#cbb6ff] bg-clip-text text-transparent p-2">
+          <h1 className="text-4xl md:text-6xl font-bold leading-[1.1] bg-gradient-to-r from-[#cbb6ff] via-white to-[#cbb6ff] bg-clip-text text-transparent p-2">
             This is why you need us
-          </h2>
+          </h1>
           <p className="mt-6 text-lg md:text-xl text-purple-100/90">
             We simplify tech, amplify your brand, and help your business run
             smarter
