@@ -73,7 +73,24 @@ async function main() {
   try {
     await waitForServer(BASE_URL);
 
-    const browser = await chromium.launch();
+    // Vercel's build container is a minimal Linux image missing the shared
+    // libraries (libnspr4.so etc.) Playwright's own downloaded Chromium
+    // needs to launch — it downloads fine via postinstall, it just can't
+    // run. @sparticuz/chromium ships a Chromium build made for exactly this
+    // environment (AWS Lambda / Vercel), so swap to it only there; local
+    // dev keeps using the regular Playwright-managed browser unchanged.
+    let launchOptions = {};
+    if (process.env.VERCEL) {
+      const { default: sparticuzChromium } = await import(
+        "@sparticuz/chromium"
+      );
+      launchOptions = {
+        args: sparticuzChromium.args,
+        executablePath: await sparticuzChromium.executablePath(),
+      };
+    }
+
+    const browser = await chromium.launch(launchOptions);
     const page = await browser.newPage();
 
     // dist/index.html doubles as both the "/" output and the SPA-fallback
