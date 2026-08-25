@@ -1,9 +1,86 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useReducedMotion,
+} from "framer-motion";
+import { FaGlobe, FaNetworkWired, FaHeadset } from "react-icons/fa";
 
-function Hero() {
+const PARALLAX_SPRING = { stiffness: 120, damping: 16, mass: 0.6 };
+
+// Floating service chips, each tracking the pointer at a different depth so
+// the stage reads as real 3D space rather than a flat image with a tilt.
+const STAGE_CHIPS = [
+  { Icon: FaGlobe, className: "left-[6%] top-[16%]", depthX: 14, depthY: 10, bobDelay: 0 },
+  { Icon: FaNetworkWired, className: "right-[8%] top-[26%]", depthX: 28, depthY: 20, bobDelay: 0.6 },
+  { Icon: FaHeadset, className: "left-[12%] bottom-[16%]", depthX: 24, depthY: 18, bobDelay: 1.2 },
+];
+
+function StageChip({ Icon, className, depthX, depthY, bobDelay, pointerX, pointerY }) {
+  const chipX = useSpring(
+    useTransform(pointerX, [0, 1], [-depthX, depthX]),
+    PARALLAX_SPRING
+  );
+  const chipY = useSpring(
+    useTransform(pointerY, [0, 1], [-depthY, depthY]),
+    PARALLAX_SPRING
+  );
+
   return (
-    <div className="w-screen h-[600px] relative">
-      {/* --- horizon glow --- */}
+    <motion.div
+      className={`absolute z-20 hidden sm:flex items-center justify-center w-14 h-14 rounded-2xl bg-white/8 border border-white/15 backdrop-blur-md shadow-[0_15px_40px_-15px_rgba(138,92,255,0.6)] ${className}`}
+      style={{ x: chipX, y: chipY }}
+      animate={{ y: [0, -10, 0] }}
+      transition={{
+        duration: 4,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: bobDelay,
+      }}
+    >
+      <Icon className="w-6 h-6 text-[#c9b8ff]" />
+    </motion.div>
+  );
+}
+
+function PhoneStage() {
+  const ref = useRef(null);
+  const reduceMotion = useReducedMotion();
+
+  const pointerX = useMotionValue(0.5);
+  const pointerY = useMotionValue(0.5);
+
+  const rotateX = useSpring(
+    useTransform(pointerY, [0, 1], [8, -8]),
+    PARALLAX_SPRING
+  );
+  const rotateY = useSpring(
+    useTransform(pointerX, [0, 1], [-10, 10]),
+    PARALLAX_SPRING
+  );
+
+  const handlePointerMove = (e) => {
+    if (reduceMotion || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    pointerX.set((e.clientX - rect.left) / rect.width);
+    pointerY.set((e.clientY - rect.top) / rect.height);
+  };
+
+  const handlePointerLeave = () => {
+    pointerX.set(0.5);
+    pointerY.set(0.5);
+  };
+
+  return (
+    <div
+      ref={ref}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+      className="w-screen h-[600px] relative [perspective:1600px]"
+    >
+      {/* --- horizon glow (far layer, stays still for depth contrast) --- */}
       <div
         className="absolute left-1/2 -translate-x-1/2 w-[1600px] h-[520px] -bottom-[60%]"
         style={{
@@ -14,13 +91,20 @@ function Hero() {
         }}
       />
 
-      {/* --- stage: hand + phone --- */}
+      {/* --- floating service chips (mid layer, parallax) --- */}
+      {!reduceMotion &&
+        STAGE_CHIPS.map((chip, i) => (
+          <StageChip key={i} {...chip} pointerX={pointerX} pointerY={pointerY} />
+        ))}
+
+      {/* --- stage: hand + phone (near layer, tilts toward the pointer) --- */}
       <div className="absolute -bottom-[10%] left-1/2 z-10">
-        <img
+        <motion.img
           src="/phone.png"
-          alt="Hand holding phone"
+          alt="Hand holding a phone displaying a Jowis Studio web project"
           className="left-1/2 -translate-x-1/2 top-[75%] max-w-none w-[570px] h-[570px]"
           draggable={false}
+          style={reduceMotion ? undefined : { rotateX, rotateY }}
         />
       </div>
     </div>
@@ -87,7 +171,7 @@ const WhyUsSection = () => {
         ))}
       </div>
 
-      <Hero />
+      <PhoneStage />
 
       <div className="bg-gradient-to-t to-[#1a00335d] from-[#180030] backdrop-blur-md relative z-20">
         {/* --- content --- */}
@@ -99,7 +183,7 @@ const WhyUsSection = () => {
             We simplify tech, amplify your brand, and help your business run
             smarter
           </p>
-          <button className="mt-10 px-8 py-4 rounded-md bg-[#3b1a78] hover:bg-[#2f1461] transition shadow-lg shadow-purple-900/30">
+          <button className="mt-10 px-8 py-4 rounded-md bg-[#3b1a78] hover:bg-[#2f1461] active:translate-y-0.5 transition shadow-lg shadow-purple-900/30">
             Let&apos;s work together
           </button>
         </div>

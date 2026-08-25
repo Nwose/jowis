@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import StarField from "./StarField";
+import TiltCard from "./TiltCard";
 
 const ServiceSection = () => {
   // card container variants
@@ -11,7 +12,7 @@ const ServiceSection = () => {
     },
   };
 
-  // card variants
+  // card entrance variants (hover/tilt is handled by TiltCard now)
   const cardVariants = {
     hidden: { opacity: 0, y: 40, rotateY: -15 },
     visible: {
@@ -20,9 +21,10 @@ const ServiceSection = () => {
       rotateY: 0,
       transition: { duration: 0.6, ease: "easeOut" },
     },
-    hover: { scale: 1.05, boxShadow: "0 0 25px rgba(138, 92, 255, 0.4)" },
-    tap: { scale: 0.97 },
   };
+
+  const cardShadow =
+    "transition-shadow duration-300 hover:shadow-[0_25px_60px_-20px_rgba(138,92,255,0.55)]";
 
   return (
     <section className="bg-[#0e0023] text-white py-16 px-4 relative overflow-hidden">
@@ -65,11 +67,13 @@ const ServiceSection = () => {
           <div className="relative flex flex-col md:flex-row gap-2 h-auto md:h-[726px]">
             {/* Left column */}
             <div className="flex flex-col gap-2 w-full md:w-[632px]">
-              <motion.div
-                className="h-[250px] md:h-[287px] p-6 relative rounded-md overflow-hidden bg-[url('/website.png'),_linear-gradient(to_top_right,_#1A002D,_#481F66)] bg-cover bg-no-repeat"
+              <TiltCard
                 variants={cardVariants}
-                whileHover="hover"
-                whileTap="tap"
+                maxTilt={9}
+                liftZ={22}
+                className="h-[250px] md:h-[287px] w-full"
+                rotatorClassName={`rounded-md overflow-hidden bg-[url('/website.png'),_linear-gradient(to_top_right,_#1A002D,_#481F66)] bg-cover bg-no-repeat ${cardShadow}`}
+                contentClassName="p-6 flex flex-col"
               >
                 <h3 className="text-white text-xl font-semibold mb-2">
                   Website design <br /> & Development
@@ -80,13 +84,15 @@ const ServiceSection = () => {
                   make sales{" "}
                   <span className="text-white font-medium">online</span>.
                 </p>
-              </motion.div>
+              </TiltCard>
 
-              <motion.div
-                className="flex-1 min-h-[200px] p-6 relative rounded-md overflow-hidden bg-[url('/setUp.png'),_linear-gradient(to_top_right,_#1A002D,_#481F66)] bg-cover bg-no-repeat"
+              <TiltCard
                 variants={cardVariants}
-                whileHover="hover"
-                whileTap="tap"
+                maxTilt={9}
+                liftZ={22}
+                className="flex-1 min-h-[200px] w-full"
+                rotatorClassName={`rounded-md overflow-hidden bg-[url('/setUp.png'),_linear-gradient(to_top_right,_#1A002D,_#481F66)] bg-cover bg-no-repeat ${cardShadow}`}
+                contentClassName="p-6 flex flex-col"
               >
                 <h3 className="text-white text-xl font-semibold mb-2">
                   Network Setup <br /> & Management
@@ -94,16 +100,18 @@ const ServiceSection = () => {
                 <p className="text-sm text-[#b3a6ff]">
                   Reliable network setup and <br /> fixes for smooth connection.
                 </p>
-              </motion.div>
+              </TiltCard>
             </div>
 
             {/* Right column */}
             <div className="flex flex-col gap-2 flex-1 w-full">
-              <motion.div
-                className="h-[250px] md:h-[439px] p-6 relative rounded-md overflow-hidden bg-[url('/ictSupport.png'),_linear-gradient(to_top_right,_#1A002D,_#481F66)] bg-cover bg-center bg-no-repeat"
+              <TiltCard
                 variants={cardVariants}
-                whileHover="hover"
-                whileTap="tap"
+                maxTilt={9}
+                liftZ={26}
+                className="h-[250px] md:h-[439px] w-full"
+                rotatorClassName={`rounded-md overflow-hidden bg-[url('/ictSupport.png'),_linear-gradient(to_top_right,_#1A002D,_#481F66)] bg-cover bg-center bg-no-repeat ${cardShadow}`}
+                contentClassName="p-6 flex flex-col"
               >
                 <h3 className="text-white text-xl font-semibold mb-2">
                   ICT Support
@@ -112,35 +120,38 @@ const ServiceSection = () => {
                   Reliable tech support that keeps your <br /> team and tools
                   running smoothly
                 </p>
-              </motion.div>
+              </TiltCard>
 
-              <motion.div
-                className="flex-1 min-h-[200px] p-6 relative rounded-md overflow-hidden bg-[url('/consult.png')] bg-cover bg-no-repeat"
+              <TiltCard
                 variants={cardVariants}
-                whileHover="hover"
-                whileTap="tap"
+                maxTilt={9}
+                liftZ={22}
+                className="flex-1 min-h-[200px] w-full"
+                rotatorClassName={`rounded-md overflow-hidden bg-[url('/consult.png')] bg-cover bg-no-repeat ${cardShadow}`}
+                contentClassName="p-6 flex flex-col"
+                overlay={
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#1A002D]/80 to-[#481F66]/80" />
+                }
               >
-                {/* Overlay gradient fixed — no white strip */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-[#1A002D]/80 to-[#481F66]/80" />
-                <div className="relative z-10">
-                  <h3 className="text-white text-xl font-semibold mb-2">
-                    IT Consulting
-                  </h3>
-                  <p className="text-sm text-[#b3a6ff]">
-                    We provide expert tech guidance <br /> to help your business
-                    grow.
-                  </p>
-                </div>
-              </motion.div>
+                <h3 className="text-white text-xl font-semibold mb-2">
+                  IT Consulting
+                </h3>
+                <p className="text-sm text-[#b3a6ff]">
+                  We provide expert tech guidance <br /> to help your business
+                  grow.
+                </p>
+              </TiltCard>
             </div>
           </div>
 
-          {/* Fifth service — full width */}
-          <motion.div
-            className="mt-2 p-6 relative rounded-md overflow-hidden bg-gradient-to-tr from-[#1A002D] to-[#481F66]"
+          {/* Fifth service, full width */}
+          <TiltCard
             variants={cardVariants}
-            whileHover="hover"
-            whileTap="tap"
+            maxTilt={6}
+            liftZ={18}
+            className="mt-2 w-full"
+            rotatorClassName={`rounded-md overflow-hidden bg-gradient-to-tr from-[#1A002D] to-[#481F66] ${cardShadow}`}
+            contentClassName="p-6 flex flex-col"
           >
             <h3 className="text-white text-xl font-semibold mb-2">
               Email Administration
@@ -149,7 +160,7 @@ const ServiceSection = () => {
               Zoho and Microsoft business email setup, migration, and ongoing
               administration for your team.
             </p>
-          </motion.div>
+          </TiltCard>
         </motion.div>
       </div>
 
