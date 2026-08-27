@@ -1,6 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { FaCubes, FaNetworkWired, FaLayerGroup } from "react-icons/fa";
 import StarField from "./StarField";
 import TiltCard from "./TiltCard";
 
@@ -13,6 +15,7 @@ const projects = [
   {
     id: 1,
     title: "The Hive Incubator",
+    category: "Web Design",
     description:
       "Website design for a startup incubator helping early-stage founders grow.",
     image: hiveIncubatorMockup,
@@ -21,6 +24,7 @@ const projects = [
   {
     id: 2,
     title: "Anmut Developers",
+    category: "Web Design",
     description:
       "Real estate website for a modern development firm in Nigeria.",
     image: anmutDevelopersMockup,
@@ -29,10 +33,31 @@ const projects = [
   {
     id: 3,
     title: "Square Farms Africa",
+    category: "Web Design",
     description:
       "Responsive website design for an agro-firm brand making impact in Africa.",
     image: squareFarmsMockup,
     link: "https://www.squarefarms.africa/",
+  },
+];
+
+// Capabilities beyond websites, shown honestly as service areas rather than
+// invented case studies — real projects can slot in here as they're delivered.
+const capabilities = [
+  {
+    Icon: FaCubes,
+    title: "Product Development",
+    description: "Custom software and web applications built around how your team actually works.",
+  },
+  {
+    Icon: FaNetworkWired,
+    title: "Network Infrastructure",
+    description: "Structured cabling, Wi-Fi coverage, and secure network setup for growing offices.",
+  },
+  {
+    Icon: FaLayerGroup,
+    title: "ERP Systems",
+    description: "Implementation and management of the business systems that run your operations.",
   },
 ];
 
@@ -66,6 +91,9 @@ const ProjectShowcase = () => {
             >
               {/* Content */}
               <div className="mb-6">
+                <span className="inline-block mb-3 px-2.5 py-1 text-xs font-medium text-[#c9b8ff] bg-[#8a5cff]/15 border border-[#8a5cff]/30 rounded-full">
+                  {project.category}
+                </span>
                 <motion.h3
                   className="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors"
                   whileHover={{ x: 4 }}
@@ -119,6 +147,48 @@ const ProjectShowcase = () => {
             </motion.div>
           ))}
         </div>
+
+        {/* Capabilities beyond websites */}
+        <motion.div
+          className="max-w-7xl mx-auto mt-10 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-8 md:p-10"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+            <div>
+              <h3 className="text-xl md:text-2xl font-bold text-white">
+                More than websites
+              </h3>
+              <p className="text-gray-300 text-sm mt-2 max-w-xl">
+                We also build custom software, set up business networks, and
+                run ERP systems. Tell us what you're working on and we'll
+                show you how it fits.
+              </p>
+            </div>
+            <Link
+              to="/contact"
+              className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-gradient-to-r from-[#7B2FF7] to-[#3A0CA3] text-white text-sm font-semibold shadow-lg hover:scale-105 hover:shadow-purple-500/50 transition-transform"
+            >
+              Tell us about your project
+            </Link>
+          </div>
+
+          <div className="grid sm:grid-cols-3 gap-6">
+            {capabilities.map(({ Icon, title, description }) => (
+              <div key={title} className="flex flex-col gap-3">
+                <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-[#8a5cff]/15 border border-[#8a5cff]/30">
+                  <Icon className="w-5 h-5 text-[#c9b8ff]" />
+                </div>
+                <h4 className="text-white font-semibold">{title}</h4>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  {description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );

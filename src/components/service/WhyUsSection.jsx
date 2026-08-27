@@ -9,16 +9,19 @@ import {
 import { FaGlobe, FaNetworkWired, FaHeadset } from "react-icons/fa";
 
 const PARALLAX_SPRING = { stiffness: 120, damping: 16, mass: 0.6 };
+const CHIP_SPRING = { type: "spring", stiffness: 320, damping: 16 };
 
 // Floating service chips, each tracking the pointer at a different depth so
 // the stage reads as real 3D space rather than a flat image with a tilt.
 const STAGE_CHIPS = [
-  { Icon: FaGlobe, className: "left-[6%] top-[16%]", depthX: 14, depthY: 10, bobDelay: 0 },
-  { Icon: FaNetworkWired, className: "right-[8%] top-[26%]", depthX: 28, depthY: 20, bobDelay: 0.6 },
-  { Icon: FaHeadset, className: "left-[12%] bottom-[16%]", depthX: 24, depthY: 18, bobDelay: 1.2 },
+  { Icon: FaGlobe, label: "Web", className: "left-[6%] top-[16%]", depthX: 14, depthY: 10 },
+  { Icon: FaNetworkWired, label: "Network", className: "right-[8%] top-[26%]", depthX: 28, depthY: 20 },
+  { Icon: FaHeadset, label: "Support", className: "left-[12%] bottom-[16%]", depthX: 24, depthY: 18 },
 ];
 
-function StageChip({ Icon, className, depthX, depthY, bobDelay, pointerX, pointerY }) {
+// Idle, they just drift gently with the pointer; on hover each one pops
+// toward the viewer and names the service it stands for.
+function StageChip({ Icon, label, className, depthX, depthY, pointerX, pointerY }) {
   const chipX = useSpring(
     useTransform(pointerX, [0, 1], [-depthX, depthX]),
     PARALLAX_SPRING
@@ -30,18 +33,130 @@ function StageChip({ Icon, className, depthX, depthY, bobDelay, pointerX, pointe
 
   return (
     <motion.div
-      className={`absolute z-20 hidden sm:flex items-center justify-center w-14 h-14 rounded-2xl bg-white/8 border border-white/15 backdrop-blur-md shadow-[0_15px_40px_-15px_rgba(138,92,255,0.6)] ${className}`}
+      className={`absolute z-20 hidden sm:flex flex-col items-center gap-2 ${className}`}
       style={{ x: chipX, y: chipY }}
-      animate={{ y: [0, -10, 0] }}
-      transition={{
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: bobDelay,
-      }}
+      initial="rest"
+      animate="rest"
+      whileHover="hover"
     >
-      <Icon className="w-6 h-6 text-[#c9b8ff]" />
+      <motion.div
+        className="flex items-center justify-center w-14 h-14 rounded-2xl bg-white/8 border border-white/15 backdrop-blur-md"
+        variants={{
+          rest: { scale: 1, y: 0, boxShadow: "0 15px 40px -15px rgba(138,92,255,0.6)" },
+          hover: { scale: 1.16, y: -8, boxShadow: "0 20px 45px -12px rgba(138,92,255,0.9)" },
+        }}
+        transition={CHIP_SPRING}
+      >
+        <Icon className="w-6 h-6 text-[#c9b8ff]" />
+      </motion.div>
+      <motion.span
+        className="text-[11px] font-medium text-[#c9b8ff] bg-[#1a002d]/90 backdrop-blur-sm px-2.5 py-0.5 rounded-full border border-white/10 whitespace-nowrap"
+        variants={{
+          rest: { opacity: 0, y: -4 },
+          hover: { opacity: 1, y: 0 },
+        }}
+        transition={{ duration: 0.18 }}
+      >
+        {label}
+      </motion.span>
     </motion.div>
+  );
+}
+
+const PHONE_URL = "jowistudio.com";
+
+// Loops the phone's screen through typing a URL and "opening" a real Jowis
+// build, so the hero shows the product instead of just describing it.
+function PhoneScreenDemo({ reduceMotion }) {
+  const [typed, setTyped] = useState(reduceMotion ? PHONE_URL.length : 0);
+  const [showSite, setShowSite] = useState(reduceMotion);
+
+  useEffect(() => {
+    if (reduceMotion) return undefined;
+
+    let cancelled = false;
+    let typeTimer;
+    let cycleTimer;
+
+    const runCycle = () => {
+      setShowSite(false);
+      setTyped(0);
+      let i = 0;
+      const typeNext = () => {
+        if (cancelled) return;
+        i += 1;
+        setTyped(i);
+        if (i < PHONE_URL.length) {
+          typeTimer = setTimeout(typeNext, 90);
+        } else {
+          typeTimer = setTimeout(() => {
+            if (!cancelled) setShowSite(true);
+          }, 450);
+        }
+      };
+      typeNext();
+    };
+
+    runCycle();
+    cycleTimer = setInterval(runCycle, 5200);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(typeTimer);
+      clearInterval(cycleTimer);
+    };
+  }, [reduceMotion]);
+
+  return (
+    <div
+      className="absolute overflow-hidden rounded-[14px] bg-[#050014] pointer-events-none"
+      style={{ left: 182, top: 59, width: 180, height: 146 }}
+    >
+      {/* address bar */}
+      <div className="flex items-center gap-1.5 h-[24px] px-2.5 bg-white/5 border-b border-white/10">
+        <FaGlobe className="w-2.5 h-2.5 text-[#9a7dff] shrink-0" />
+        <span className="text-[9px] font-medium text-[#d8cdff] truncate">
+          {PHONE_URL.slice(0, typed)}
+          {!reduceMotion && (
+            <span className="inline-block w-px h-[9px] bg-[#9a7dff] ml-px align-middle animate-pulse" />
+          )}
+        </span>
+      </div>
+
+      {/* page reveal: a crisp built webpage layout reads better than a
+          screenshot would at this tiny scale, and needs no extra asset */}
+      <div className="relative w-full h-[calc(100%-24px)] bg-gradient-to-br from-[#1A002D] to-[#3a1868]">
+        <motion.div
+          className="absolute inset-0 flex flex-col gap-1.5 p-2.5"
+          initial={false}
+          animate={{ opacity: showSite ? 1 : 0, scale: showSite ? 1 : 0.96 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <div className="flex items-center justify-between">
+            <div className="h-1.5 w-6 rounded-full bg-[#c9b8ff]/70" />
+            <div className="flex gap-1">
+              <div className="h-1 w-3 rounded-full bg-white/25" />
+              <div className="h-1 w-3 rounded-full bg-white/25" />
+            </div>
+          </div>
+          <div className="h-6 w-4/5 rounded-sm bg-white/15 mt-1" />
+          <div className="h-1.5 w-full rounded-full bg-white/10" />
+          <div className="h-1.5 w-3/5 rounded-full bg-white/10" />
+          <div className="flex gap-1.5 mt-1.5 flex-1">
+            <div className="flex-1 rounded-md bg-white/10" />
+            <div className="flex-1 rounded-md bg-white/10" />
+          </div>
+        </motion.div>
+
+        {!showSite && (
+          <div className="absolute inset-0 flex flex-col gap-1.5 p-2.5">
+            <div className="h-2 w-3/4 rounded-full bg-white/10" />
+            <div className="h-2 w-full rounded-full bg-white/5" />
+            <div className="h-2 w-5/6 rounded-full bg-white/5" />
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -99,13 +214,18 @@ function PhoneStage() {
 
       {/* --- stage: hand + phone (near layer, tilts toward the pointer) --- */}
       <div className="absolute -bottom-[10%] left-1/2 z-10">
-        <motion.img
-          src="/phone.png"
-          alt="Hand holding a phone displaying a Jowis Studio web project"
-          className="left-1/2 -translate-x-1/2 top-[75%] max-w-none w-[570px] h-[570px]"
-          draggable={false}
+        <motion.div
+          className="relative w-[570px] h-[570px] -translate-x-1/2"
           style={reduceMotion ? undefined : { rotateX, rotateY }}
-        />
+        >
+          <img
+            src="/phone.png"
+            alt="Hand holding a phone displaying a Jowis Studio web project"
+            className="w-full h-full"
+            draggable={false}
+          />
+          <PhoneScreenDemo reduceMotion={reduceMotion} />
+        </motion.div>
       </div>
     </div>
   );
